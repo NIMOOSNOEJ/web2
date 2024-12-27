@@ -70,7 +70,8 @@
 				$("#user_referrer").val(document.referrer);
 
 				bSend_ing = true;
-				var frm = new FormData($("#submit_form")[0]);
+				
+				var frm = jQuery(this).closest('form')[0];
 				frm.action = "https://script.google.com/macros/s/AKfycbwjaxK242_UJ3G0_s6SKT1ZgmPmhC_PQmLwzHZHglhgMc_Pg_f-IZY6MGAVm5JQpNJg/exec";
        				frm.submit();
 
