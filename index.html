@@ -26,39 +26,39 @@
 					alert("이미 신청하셨습니다.");
 					return;
 				}
-				if($("input[name='user_company']").val() ==""){
+				if($("input[name='company']").val() ==""){
 					alert('기업명을 입력하세요');
-					$("input[name='user_company']").focus();
+					$("input[name='company']").focus();
 					return false;
 				}
-				if($("input[name='user_number']").val() ==""){
+				if($("input[name='cnt']").val() ==""){
 					alert('직원수를 입력하세요');
-					$("input[name='user_number']").focus();
+					$("input[name='cnt']").focus();
 					return false;
 				}
-				if($("input[name='user_name']").val() ==""){
+				if($("input[name='manager']").val() ==""){
 					alert('담당자명을 입력하세요');
-					$("input[name='user_name']").focus();
+					$("input[name='manager']").focus();
 					return false;
 				}
-				if($("input[name='user_email']").val() ==""){
+				if($("input[name='email']").val() ==""){
 					alert('이메일을 입력하세요');
-					$("input[name='user_email']").focus();
+					$("input[name='email']").focus();
 					return false;
 				}
-				if( !$("input[name='user_email']").val().match("@") ) {
+				if( !$("input[name='email']").val().match("@") ) {
 					alert('이메일을 확인해주세요');
-					$("input[name='user_email']").focus();
+					$("input[name='email']").focus();
 					return false;
 				}
-				if($("input[name='user_tel']").val() ==""){
+				if($("input[name='contact']").val() ==""){
 					alert('연락처를 입력하세요');
-					$("input[name='user_tel']").focus();
+					$("input[name='contact']").focus();
 					return false;
 				}
-				if($("textarea[name='user_text']").val() ==""){
+				if($("textarea[name='contents']").val() ==""){
 					alert('문의내용을 입력하세요');
-					$("textarea[name='user_text']").focus();
+					$("textarea[name='contents']").focus();
 					return false;
 				}
 				if ( $("#user_agree").length ) {
@@ -70,38 +70,14 @@
 				$("#user_referrer").val(document.referrer);
 
 				bSend_ing = true;
+				var frm = new FormData($("#submit_form")[0]);
+				frm.action = "https://script.google.com/macros/s/AKfycbwjaxK242_UJ3G0_s6SKT1ZgmPmhC_PQmLwzHZHglhgMc_Pg_f-IZY6MGAVm5JQpNJg/exec";
+       				frm.submit();
 
-				var formdata = new FormData($("#submit_form")[0]);
-				$.ajax({
-					type: "POST",
-					url: "/submit.php",
-					processData : false,
-					contentType : false,
-					data: formdata,
-					success: function(data) {
-						if (data == "success") {
-							$.ajax({
-								type: "POST",
-								url: "/common/aligo/curl_send_alimtalk.php",
-								processData : false,
-								contentType : false,
-								data: formdata,
-								success: function(data) {
-									if (data == "success") {
-										console.log("알림톡 성공");
-									} else {
-										console.log("알림톡 실패");
-									}
-									alert("신청이 정상 처리되었습니다");
-									location.reload();
-								},
-							});
-						} else {
-							alert("신청 접수가 실패했습니다!");
-							bSend_ing = false;
-						}
-					},
-				});
+        			jQuery('form input, textarea').val('');
+        			alert('문의 내용이 등록되었습니다.'); return false;
+				
+				
 			});
 		});
 	</script>
@@ -573,22 +549,22 @@
 				<input type="hidden" name="user_clientkey" id="user_clientkey" value="3">
 				<input type="hidden" name="user_referrer" id="user_referrer" value="">
 				<div class="flex items-center">
-					<label>기업명</label><input type="text" name="user_company" id="user_company" maxlength="100" required>
+					<label>기업명</label><input type="text" name="company" id="company" maxlength="100" required>
 				</div>
 				<div class="flex items-center mt-2">
-					<label>직원수</label><input type="text" name="user_number" id="user_number" maxlength="100" required onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)">
+					<label>직원수</label><input type="text" name="cnt" id="cnt" maxlength="100" required onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)">
 				</div>
 				<div class="flex items-center mt-2">
-					<label>담당자</label><input type="text" name="user_name" id="user_name" maxlength="100" required>
+					<label>담당자</label><input type="text" name="manager" id="manager" maxlength="100" required>
 				</div>
 				<div class="flex items-center mt-2">
-					<label>E-mail</label><input type="text" name="user_email" id="user_email" class="email_check" maxlength="100" required>
+					<label>E-mail</label><input type="text" name="email" id="email" class="email_check" maxlength="100" required>
 				</div>
 				<div class="flex items-center mt-2">
-					<label>연락처</label><input type="text" name="user_tel" id="user_tel" class="tel_check" maxlength="13" placeholder="" onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" required>
+					<label>연락처</label><input type="text" name="contact" id="contact" class="tel_check" maxlength="13" placeholder="" onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" required>
 				</div>
 				<div class="flex items-start mt-2">
-					<label>문의내용</label><textarea rows="3" name="user_text" id="user_text" required></textarea>
+					<label>문의내용</label><textarea rows="3" name="contents" id="contents" required></textarea>
 				</div>
 				<div class="flex items-center mt-2 agree_flex">
 					<span onclick='showPP();'>개인정보취급방침</span>
